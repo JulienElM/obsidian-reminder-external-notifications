@@ -9,8 +9,8 @@ import {
 
 import {
   DEFAULT_SETTINGS,
-  ObsidianNotificationsSelfhostedSettings,
-  ONSSettingTab,
+  ObsidianToNtfyRemindersSettings,
+  ObsidianToNtfyRemindersSettingsTab,
 } from "./settings/settings";
 import { ReminderService } from "ReminderService";
 
@@ -39,7 +39,7 @@ const DelayEntries: DelayEntry[] = [
 ];
 
 export default class ObsidianNotificationsSelfhosted extends Plugin {
-  settings: ObsidianNotificationsSelfhostedSettings;
+  settings: ObsidianToNtfyRemindersSettings;
   private remindState = new Map<string, boolean>();
   private reminderService: ReminderService;
   private processingReminder = new Set<string>();
@@ -97,7 +97,7 @@ export default class ObsidianNotificationsSelfhosted extends Plugin {
       ),
     );
 
-    this.addSettingTab(new ONSSettingTab(this.app, this));
+    this.addSettingTab(new ObsidianToNtfyRemindersSettingsTab(this.app, this));
   }
 
   onunload() {}
@@ -207,7 +207,7 @@ export default class ObsidianNotificationsSelfhosted extends Plugin {
     this.settings = Object.assign(
       {},
       DEFAULT_SETTINGS,
-      (await this.loadData()) as Partial<ObsidianNotificationsSelfhostedSettings>,
+      (await this.loadData()) as Partial<ObsidianToNtfyRemindersSettings>,
     );
   }
 

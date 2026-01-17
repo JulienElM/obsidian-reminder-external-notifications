@@ -1,5 +1,5 @@
-# Obsidian Reminders External Notifications
-Add quick reminders for your notes, send the reminders information to an external endpoint (to use in conjunction with [ntfy.sh](ntfy.sh) for example).
+# Obsidian to ntfy reminders
+Receive notifications on ntfy for reminders you configure on your files.
 
 > [!CAUTION]
 > **Data usage**  

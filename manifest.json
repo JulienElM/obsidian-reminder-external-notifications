@@ -1,9 +1,9 @@
 {
-  "id": "obsidian-reminder-external-notifications",
-  "name": "Obsidian reminders and external notifications",
-  "version": "0.1.0",
+  "id": "obsidian-to-ntfy-reminders",
+  "name": "Obsidian to ntfy reminders",
+  "version": "0.1.1",
   "minAppVersion": "0.15.0",
-  "description": "Configure reminders on your files, and recieve notifications on all your devices.",
+  "description": "Receive notifications on ntfy for reminders you configure on your files.",
   "author": "JulienElM",
   "isDesktopOnly": false
 }

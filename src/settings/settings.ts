@@ -1,8 +1,8 @@
-import ObsidianNotificationsSelfhosted from "main";
+import ObsidianToNtfyReminders from "main";
 import { App, PluginSettingTab, Setting, normalizePath } from "obsidian";
 import { MultiSuggest } from "settings/MultiSuggest";
 
-export interface ObsidianNotificationsSelfhostedSettings {
+export interface ObsidianToNtfyRemindersSettings {
   defaultFolder: string;
   dateFormat: string;
   frontmatterDateKey: string;
@@ -13,7 +13,7 @@ export interface ObsidianNotificationsSelfhostedSettings {
   additionalHeaders: string;
 }
 
-export const DEFAULT_SETTINGS: ObsidianNotificationsSelfhostedSettings = {
+export const DEFAULT_SETTINGS: ObsidianToNtfyRemindersSettings = {
   defaultFolder: "/",
   dateFormat: "YYYY-MM-DD",
   frontmatterDateKey: "Date",
@@ -24,10 +24,10 @@ export const DEFAULT_SETTINGS: ObsidianNotificationsSelfhostedSettings = {
   additionalHeaders: "",
 };
 
-export class ONSSettingTab extends PluginSettingTab {
-  plugin: ObsidianNotificationsSelfhosted;
+export class ObsidianToNtfyRemindersSettingsTab extends PluginSettingTab {
+  plugin: ObsidianToNtfyReminders;
 
-  constructor(app: App, plugin: ObsidianNotificationsSelfhosted) {
+  constructor(app: App, plugin: ObsidianToNtfyReminders) {
     super(app, plugin);
     this.plugin = plugin;
   }
