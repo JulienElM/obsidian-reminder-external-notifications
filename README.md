@@ -1,16 +1,17 @@
 # Obsidian Reminders External Notifications
 Add quick reminders for your notes, send the reminders information to an external endpoint (to use in conjunction with [ntfy.sh](ntfy.sh) for example).
 
-> [!Warning: Network use]+
-> This plugin can send data outside of your vault. 
-> It only sends the data of the reminders you configure (see [[#External reminder API]], and only to the URL you specifically provide. 
-> It is configurable and you can disable it entirely in the plugin settings via the `Send reminders to external API ?` toggle. 
+> [!CAUTION]
+> **Data usage**  
+> This plugin can send data outside of your vault.  
+> It only sends the data of the reminders you configure (see [External reminder API](#external-reminder-api), and only to the URL you specifically provide.  
+> It is configurable and you can disable it entirely in the plugin settings via the `Send reminders to external API ?` toggle.  
 # Why this plugin
 One of the uses I have for Obsidian is a very modular calendar ([OZ Calendar](https://github.com/ozntel/oz-calendar) is what I currently use to display my calendar events).
 This plugin is born to the need of a solution similar to Notion's "Remind" feature on dates, with the possibility to receive *real* notifications for events, on all my devices because I tend to forget a lot of stuff.
 Currently it only allows for file-level reminders since it fits my main use-case, I'm thinking about adding support for inline **reminders** too (see [Feature ideas](#feature-ideas)). 
 
-> [!Disclaimer]+
+> [!NOTE]  
 > This is my 1st Obsidian plugin, and 1st open source project as well. I'm a pragmatic hobbyist programmer that loves tinkering with the tools he uses, but I'm nowhere near the level of a professional developer so the code is amateur-level at best, but functional enough for me to feel like sharing it. Use at your own risk !
 
 # How to use
@@ -50,7 +51,8 @@ You can add 1 or more custom HTTP headers that will be send along the API reques
 With the current implementation, you can totally rely on the public version of ntfy.sh to manage your notifications. See https://docs.ntfy.sh/ for more details on how to setup & use [ntfy.sh](ntfy.sh).
 Once you have created a topic, simply add `https://ntfy.sh` as the API endpoint and your topic name in the plugin settings and voilà!
 
-> [!Considerations when using ntfy.sh]
+> [!WARNING]
+> Considerations when using ntfy.sh    
 > [ntfy.sh](ntfy.sh) has some limitations in its use :
 > * **You cannot schedule a notification later than 3 days after the current day** 
 > * Similarly, you cannot schedule a notification for a date that is before the current date
