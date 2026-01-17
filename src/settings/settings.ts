@@ -1,6 +1,6 @@
 import ObsidianNotificationsSelfhosted from "main";
 import { App, PluginSettingTab, Setting, normalizePath } from "obsidian";
-import { FolderSuggest } from "settings/suggestor";
+import { MultiSuggest } from "settings/MultiSuggest";
 
 export interface ObsidianNotificationsSelfhostedSettings {
   defaultFolder: string;
@@ -41,7 +41,7 @@ export class ONSSettingTab extends PluginSettingTab {
       .setName("Source folder location")
       .setDesc("Select the folder from which notifications will be sourced.")
       .addSearch((cb) => {
-        new FolderSuggest(cb.inputEl);
+        new MultiSuggest(this.app, cb.inputEl);
         cb.setPlaceholder("Example: folder1/folder2")
           .setValue(this.plugin.settings.defaultFolder)
           .onChange((new_folder) => {
