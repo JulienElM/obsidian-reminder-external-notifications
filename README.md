@@ -1,5 +1,5 @@
 # Obsidian Reminders External Notifications
-Adds quick reminders for notes, and the possibility of sending the reminders information to an external endpoint (to use in conjunction with [ntfy.sh](ntfy.sh) for example).
+Add quick reminders for your notes, send the reminders information to an external endpoint (to use in conjunction with [ntfy.sh](ntfy.sh) for example).
 
 > [!Warning: Network use]+
 > This plugin can send data outside of your vault. 
@@ -8,7 +8,7 @@ Adds quick reminders for notes, and the possibility of sending the reminders inf
 # Why this plugin
 One of the uses I have for Obsidian is a very modular calendar ([OZ Calendar](https://github.com/ozntel/oz-calendar) is what I currently use to display my calendar events).
 This plugin is born to the need of a solution similar to Notion's "Remind" feature on dates, with the possibility to receive *real* notifications for events, on all my devices because I tend to forget a lot of stuff.
-Currently it only allows for file-level reminders since it fits my main use-case, I'm thinking about adding support for inline **reminders** too (see [[#Feature ideas]]). 
+Currently it only allows for file-level reminders since it fits my main use-case, I'm thinking about adding support for inline **reminders** too (see [[#feature-ideas]]). 
 
 > [!Disclaimer]+
 > This is my 1st Obsidian plugin, and 1st open source project as well. I'm a pragmatic hobbyist programmer that loves tinkering with the tools he uses, but I'm nowhere near the level of a professional developer so the code is amateur-level at best, but functional enough for me to feel like sharing it. Use at your own risk !
@@ -42,7 +42,7 @@ If you have defined an external endpoint, the plugin will call this endpoint wit
 ```
 
 `topic`, `message`, `title`, `tags`, `click` and `delay` are base parameters that ntfy can use to create a reminder. 
-`reminderInfo` is an additional object with more information, in case you want to send the data through a middleware first (see [[#Advanced notifications with selfhosted ntfy and middleware]])
+`reminderInfo` is an additional object with more information, in case you want to send the data through a middleware first (see [[#advanced-notifications]])
 ## Additional headers
 You can add 1 or more custom HTTP headers that will be send along the API request, for example to support authenticated proxies, tunnels and SSO.
 
@@ -60,7 +60,8 @@ Once you have created a topic, simply add `https://ntfy.sh` as the API endpoint 
 > * ntfy.sh is a third party, so avoid sending sensitive/personal data in your notifications
 > 
 > For more informations on topics and limitations : https://docs.ntfy.sh/publish/#public-topics
-### Advanced notifications with selfhosted ntfy and middleware
+
+### [Advanced notifications with selfhosted ntfy and middleware](#advanced-notifications)
 Since this plugin was originally developed for my personal use and given the limitations detailed above, I'll share here how I setup my current notification system. 
 
 I've set up the plugin to call a webhook configured in a self hosted [N8N](https://n8n.io/) container instead, which handles the data transformation, deduplication (using the hash in the `reminderInfo`), and sending the notification only when necessary to my ntfy container.
@@ -68,7 +69,7 @@ This gives me control over what the notification looks like, where my notificati
 You can find information on how to self host ntfy here : https://docs.ntfy.sh/install/
 and N8N here : https://docs.n8n.io/hosting/.
 
-# Feature ideas
+# [Feature ideas](#feature-ideas)
 - Allow mapping for more ntfy parameters in the settings
 - Use a list of options for body format (default, ntfy, other ?) instead of everything in the same body
 - More detailed error handling (especially for API interactions)
