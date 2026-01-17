@@ -1,4 +1,4 @@
-import { ObsidianNotificationsSelfhostedSettings } from "settings/settings";
+import { ObsidianToNtfyRemindersSettings } from "settings/settings";
 import {
   App,
   TFile,
@@ -48,7 +48,7 @@ export interface ReminderDelay {
 export class ReminderService {
   constructor(
     private app: App,
-    private settings: ObsidianNotificationsSelfhostedSettings,
+    private settings: ObsidianToNtfyRemindersSettings,
   ) {}
 
   /**
