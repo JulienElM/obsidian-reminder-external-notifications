@@ -25,6 +25,7 @@ export class MultiSuggest extends AbstractInputSuggest<string> {
 
   selectSuggestion(folder: string, evt: MouseEvent | KeyboardEvent): void {
     this.inputEl.value = folder;
+    this.inputEl.trigger("input");
     this.close();
   }
 }

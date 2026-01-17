@@ -45,6 +45,7 @@ export class ObsidianToNtfyRemindersSettingsTab extends PluginSettingTab {
         cb.setPlaceholder("Example: folder1/folder2")
           .setValue(this.plugin.settings.defaultFolder)
           .onChange((new_folder) => {
+            console.warn("changed", new_folder);
             this.plugin.settings.defaultFolder = normalizePath(new_folder);
             this.plugin.saveSettings().catch((e: string) => {
               console.error(e);
