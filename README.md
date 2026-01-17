@@ -1,90 +1,76 @@
-# Obsidian Sample Plugin
+# Obsidian Reminders External Notifications
+Adds quick reminders for notes, and the possibility of sending the reminders information to an external endpoint (to use in conjunction with [ntfy.sh](ntfy.sh) for example).
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+> [!Warning: Network use]+
+> This plugin can send data outside of your vault. 
+> It only sends the data of the reminders you configure (see [[#External reminder API]], and only to the URL you specifically provide. 
+> It is configurable and you can disable it entirely in the plugin settings via the `Send reminders to external API ?` toggle. 
+# Why this plugin
+One of the uses I have for Obsidian is a very modular calendar ([OZ Calendar](https://github.com/ozntel/oz-calendar) is what I currently use to display my calendar events).
+This plugin is born to the need of a solution similar to Notion's "Remind" feature on dates, with the possibility to receive *real* notifications for events, on all my devices because I tend to forget a lot of stuff.
+Currently it only allows for file-level reminders since it fits my main use-case, I'm thinking about adding support for inline **reminders** too (see [[#Feature ideas]]). 
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+> [!Disclaimer]+
+> This is my 1st Obsidian plugin, and 1st open source project as well. I'm a pragmatic hobbyist programmer that loves tinkering with the tools he uses, but I'm nowhere near the level of a professional developer so the code is amateur-level at best, but functional enough for me to feel like sharing it. Use at your own risk !
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open modal (simple)" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+# How to use
+When checking the `RemindMe` property of a note (or whatever checkbox property you define in the plugin settings), select when you want to be reminded of this event from the suggested delays.
+![demo](./img/plugin-demo.gif)
 
-## First time developing plugins?
+## External reminder API
+If you have defined an external endpoint, the plugin will call this endpoint with the following information in the request body :
 
-Quick starting guide for new plugin devs:
-
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
-
-## Releasing new releases
-
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
-
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
-
-## Adding your plugin to the community plugin list
-
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
-
-## How to use
-
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
-
-## Manually installing the plugin
-
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
-
-## Improve code quality with eslint
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- This project already has eslint preconfigured, you can invoke a check by running`npm run lint`
-- Together with a custom eslint [plugin](https://github.com/obsidianmd/eslint-plugin) for Obsidan specific code guidelines.
-- A GitHub action is preconfigured to automatically lint every commit on all branches.
-
-## Funding URL
-
-You can include funding URLs where people who use your plugin can financially support it.
-
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
-
-```json
+```
 {
-    "fundingUrl": "https://buymeacoffee.com"
+  # ntfy specific properties, for easy notifications setup
+  "topic": "my-topic", #Topic name where the notification will be published
+  "message": "Happening on Wed 12 at 15:30", #Body of the notification
+  "title": "Reminder : Drink water", # Title of the notification
+  "tags": [
+    "alarm_clock"
+  ], #Icons/Tags to use in the notification
+  "click": "obsidian://open?vault=TestingVault&file=Calendar%2FDrink%20Water.md", #Link to the note where the reminder was set
+  "delay": "1773043200", #Unix epoch date, when should the reminder notification be sent
+  # Generic content, for more customized workflows, will be ignored by ntfy
+  "reminderInfo": {
+    "event_date": "2026-03-11", #ISO date for the event
+    "remind_date": "2026-03-09T09:00:00.000+02:00", #ISO date for the reminder
+    "file_title": "Drink water", #Title of the file, used in the notification title
+    "hash": "33997cd8aa4b92f9d620042c9892072d" #Hash calculated from event_date & file_link, useful to avoid reminder duplication
+  }
 }
 ```
 
-If you have multiple URLs, you can also do:
+`topic`, `message`, `title`, `tags`, `click` and `delay` are base parameters that ntfy can use to create a reminder. 
+`reminderInfo` is an additional object with more information, in case you want to send the data through a middleware first (see [[#Advanced notifications with selfhosted ntfy and middleware]])
+## Additional headers
+You can add 1 or more custom HTTP headers that will be send along the API request, for example to support authenticated proxies, tunnels and SSO.
 
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
-```
+## Example setup
+### Simple notifications with [ntfy.sh](ntfy.sh)
+With the current implementation, you can totally rely on the public version of ntfy.sh to manage your notifications. See https://docs.ntfy.sh/ for more details on how to setup & use [ntfy.sh](ntfy.sh).
+Once you have created a topic, simply add `https://ntfy.sh` as the API endpoint and your topic name in the plugin settings and voilà!
 
-## API Documentation
+> [!Considerations when using ntfy.sh]
+> [ntfy.sh](ntfy.sh) has some limitations in its use :
+> * **You cannot schedule a notification later than 3 days after the current day** 
+> * Similarly, you cannot schedule a notification for a date that is before the current date
+> * Each time you setup a reminder, ntfy will register a notification, which could result in multiple notifications for the same event if you toggle "RemindMe" multiple times
+> * The topics you create are "public", anyone (if they find the topic name you're using) can send and receive notifications on your topic
+> * ntfy.sh is a third party, so avoid sending sensitive/personal data in your notifications
+> 
+> For more informations on topics and limitations : https://docs.ntfy.sh/publish/#public-topics
+### Advanced notifications with selfhosted ntfy and middleware
+Since this plugin was originally developed for my personal use and given the limitations detailed above, I'll share here how I setup my current notification system. 
 
-See https://docs.obsidian.md
+I've set up the plugin to call a webhook configured in a self hosted [N8N](https://n8n.io/) container instead, which handles the data transformation, deduplication (using the hash in the `reminderInfo`), and sending the notification only when necessary to my ntfy container.
+This gives me control over what the notification looks like, where my notification data is stored and much more. 
+You can find information on how to self host ntfy here : https://docs.ntfy.sh/install/
+and N8N here : https://docs.n8n.io/hosting/.
+
+# Feature ideas
+- Allow mapping for more ntfy parameters in the settings
+- Use a list of options for body format (default, ntfy, other ?) instead of everything in the same body
+- More detailed error handling (especially for API interactions)
+- Inline reminders
+- Finer reminder delays/user defined delays/custom delays
