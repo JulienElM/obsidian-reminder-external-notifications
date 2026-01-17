@@ -19,7 +19,7 @@ When checking the `RemindMe` property of a note (or whatever checkbox property y
 ![demo](./img/plugin-demo.gif)
 
 ## External reminder API
-If you have defined an external endpoint, the plugin will call this endpoint with the following information in the request body :
+If you have defined an external endpoint, the plugin send a POST request to this endpoint with the following request body :
 ```
 {
   # ntfy specific properties, for easy notifications setup
