@@ -1,7 +1,7 @@
 {
   "name": "obsidian-reminder-external-notifications",
   "version": "0.1.0",
-  "description": "Configure reminders on your files, and recieve notifications on all your devices",
+  "description": "Configure reminders on your files, and recieve notifications on all your devices.",
   "main": "main.js",
   "type": "module",
   "scripts": {
