@@ -1,6 +1,6 @@
 {
   "name": "obsidian-to-ntfy-reminders",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "Receive notifications on ntfy for reminders you configure on your files.",
   "main": "main.js",
   "type": "module",
